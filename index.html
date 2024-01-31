@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API (Application programming Interface )</title>
+    <style>
+
+      *{
+        padding: 0;
+        margin: 0;
+      }
+
+         
+      body{
+            background-image: url(/images.jfif);
+            background-size: cover;
+            background-color: grey;
+            
+        }
+        
+
+      p {
+            color:black;
+            word-spacing: 10px;
+            margin: 15px;
+            width: 500px;
+            height: 40px;
+            font-size: 25px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            border-radius: 15px;
+            text-align: left ;
+          
+        }
+
+    h1{
+      color: black;
+      margin: 15px;
+      width: 400px;
+      height: 55px;
+      font-size: 45px;
+      word-spacing: 10px;
+      letter-spacing: 2px;
+      justify-content: center ;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      border-radius: 10px;
+    text-align: center;
+    }
+
+
+    h2{
+      color: black;
+      display: flex;
+      justify-content:center;
+      margin: 15px;
+      width: 650px;
+      height: 65px;
+      font-size: 35px;
+      display: flex;
+      align-items: center;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      border-radius: 10px;
+      
+    }
+
+
+    input{
+      color: black;
+      margin: 15px;
+      width: 300px;
+      height: 30px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      font-family:'Courier New', Courier, monospace;
+      border-radius: 15px;
+    
+    }
+
+
+    button{
+      color: black;
+      margin: 15px;
+      width: 100px;
+      height: 30px;
+      border-radius: 10px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 15px;
+    }
+    </style>
+  </head>
+  <body>
+
+    <h1>Wether of Cities</h1>
+    <h2 id="cityName">City Name : 
+      <input type="text" name="CityName" id="weather">
+      <button type="button" onclick="submitForm()">Submit</button>
+    </h2>
+    <p id="Weather">Weather :</p>
+    <p id="temp">Temp :</p>
+    <p id="humidity">Humidity :</p>
+    <p id="pressure">Pressure :</p>
+    <p id="windSpeed">WindSpeed :</p>
+
+
+    <script>
+      let latitude = "19.4564";
+      let longitude = "72.7925";
+      const apiKey = "309fbf4d24ee6e2250d2b188c4f7983a";
+      let Data;
+      //let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+      
+      async function submitForm() { 
+        cityname = document.getElementById("weather").value
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${apiKey}&units=metric`;
+        let Response = await fetch(url);
+        if (Response.status == 200) {
+          Data = await Response.json();
+          useData(Data);
+        }
+      }
+      function useData(Data) {
+        console.log(Data);
+        //document.getElementById("cityName").innerHTML += Data.name;
+        document.getElementById("temp").innerHTML += Data.main.temp+"<sup>o</sup> C";
+        document.getElementById("humidity").innerHTML += Data.main.humidity;
+        document.getElementById("pressure").innerHTML += Data.main.pressure;
+        document.getElementById("windSpeed").innerHTML+= Data.wind.speed+"Kmph" ;
+        document.getElementById("Weather").innerHTML += Data.weather[0]['main']
+      }
+
+    </script>
+  </body>
+</html>
